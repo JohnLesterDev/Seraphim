@@ -20,7 +20,7 @@
 
 package dev.johnlester.seraphim.controllers;
 
-import dev.johnlester.seraphim.models.SQLiteHelper;
+import dev.johnlester.seraphim.models.SQLHelper;
 import dev.johnlester.seraphim.views.PasswordManagerView;
 
 import java.awt.event.ActionEvent;
@@ -33,7 +33,7 @@ public class PasswordManagerController {
         this.view = view;
         
         // Initialize the database and create users table
-        SQLiteHelper.createUsersTable();
+        SQLHelper.createUsersTable();
         
         // Add action listeners for buttons
         view.addLoginButtonListener(new LoginAction());
@@ -47,7 +47,7 @@ public class PasswordManagerController {
             String username = view.getUsername();
             String password = view.getPassword();
 
-            if (SQLiteHelper.checkUserCredentials(username, password)) {
+            if (SQLHelper.checkUserCredentials(username, password)) {
                 view.showSuccessMessage("Login Successful!");
             } else {
                 view.showErrorMessage("Invalid credentials.");
@@ -62,7 +62,7 @@ public class PasswordManagerController {
             String username = view.getUsername();
             String password = view.getPassword();
 
-            if (SQLiteHelper.addUser(username, password)) {
+            if (SQLHelper.addUser(username, password)) {
                 view.showSuccessMessage("User Registered!");
             } else {
                 view.showErrorMessage("Registration Failed!");
