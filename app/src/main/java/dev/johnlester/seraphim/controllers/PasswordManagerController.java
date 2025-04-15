@@ -31,10 +31,7 @@ public class PasswordManagerController {
 
     public PasswordManagerController(PasswordManagerView view) {
         this.view = view;
-        
-        // Initialize the database and create users table
-        SQLHelper.createUsersTable();
-        
+                
         // Add action listeners for buttons
         view.addLoginButtonListener(new LoginAction());
         view.addRegisterButtonListener(new RegisterAction());
