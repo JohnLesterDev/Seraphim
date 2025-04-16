@@ -60,6 +60,7 @@ ehthumbs.db
 # Logs
 logs/
 *.log
+.env
 
 # Temporary files
 *.tmp
