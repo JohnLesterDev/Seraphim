@@ -17,19 +17,30 @@
  * Copyright (C) 2025 JohnLesterDev
  */
 
-package dev.johnlester.seraphim.utils;
 
+package dev.johnlester.seraphim.views;
 
-/**
- * Enumerates the strength of a given password
- * 
- * <ul>
- * <li>UNACCEPTABLE: Password is not secure at all</li>
- * <li>WEAK: Password is weak and should be changed</li>
- * <li>MEDIUM: Password is medium strength</li>
- * <li>STRONG: Password is strong and secure</li>
- * </ul>
- */
-public enum SecuredStrength {
-    UNACCEPTABLE, WEAK, MEDIUM, STRONG
+import javax.swing.JFrame;
+
+public class AuthenticationView extends BaseView {
+
+    public AuthenticationView(JFrame frame) {
+        super(frame); 
+    }
+
+    @Override
+    protected void initView() {
+        // TODO designing :>
+    }
+
+    @Override
+    protected float defineWidthScale() {
+        return 0.75f;
+    }
+
+    @Override
+    protected float defineHeightScale() {
+        return 0.5f;
+    }
 }
+

@@ -21,7 +21,6 @@
 package dev.johnlester.seraphim.controllers;
 
 import dev.johnlester.seraphim.models.AuthenticationModel;
-import dev.johnlester.seraphim.models.SQLHelper;
 import dev.johnlester.seraphim.views.PasswordManagerView;
 
 import java.awt.event.ActionEvent;

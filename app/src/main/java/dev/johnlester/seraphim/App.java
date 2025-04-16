@@ -17,16 +17,53 @@
  * Copyright (C) 2025 JohnLesterDev
  */
 
- package dev.johnlester.seraphim;
+package dev.johnlester.seraphim;
 
- import dev.johnlester.seraphim.controllers.PasswordManagerController;
- import dev.johnlester.seraphim.views.PasswordManagerView;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
+
+import dev.johnlester.seraphim.controllers.ViewManager;
+import dev.johnlester.seraphim.utils.ConfigUtils;
+import dev.johnlester.seraphim.views.AuthenticationView;
  
- public class App {
-     public static void main(String[] args) {
-         // Create the view and controller
-         PasswordManagerView view = new PasswordManagerView();
-         new PasswordManagerController(view);
-     }
- }
+/**
+ * Main class for the Seraphim application.
+ * 
+ * @author JohnLesterDev
+ */
+public class App {
+    /**
+     * Main method for the application.
+     * 
+     * @param args command line arguments
+     */
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            JFrame frame = new JFrame(ConfigUtils.get("title"));
+            frame.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosing(WindowEvent windowEvent) {
+                    beforeExit();
+                    System.exit(0);
+                }
+            });
+            
+            frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+            ViewManager.init(frame);
+
+            AuthenticationView authenticationView = new AuthenticationView(frame);
+            ViewManager.switchTo(authenticationView, frame.getTitle() + " - Login");
+
+            frame.setVisible(true);
+        });
+    }
+
+    public static void beforeExit() {
+        ConfigUtils.saveProperties();
+    }
+}
+
  

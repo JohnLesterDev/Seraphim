@@ -42,6 +42,7 @@ public class AuthenticationModel extends BaseModel {
 
     private AuthenticationModel() {
         super();
+        initializeTable();
     }
 
 
