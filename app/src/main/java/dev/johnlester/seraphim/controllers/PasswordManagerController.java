@@ -20,6 +20,7 @@
 
 package dev.johnlester.seraphim.controllers;
 
+import dev.johnlester.seraphim.models.AuthenticationModel;
 import dev.johnlester.seraphim.models.SQLHelper;
 import dev.johnlester.seraphim.views.PasswordManagerView;
 
@@ -28,6 +29,7 @@ import java.awt.event.ActionListener;
 
 public class PasswordManagerController {
     private PasswordManagerView view;
+    private AuthenticationModel authenticationModel = AuthenticationModel.getInstance();
 
     public PasswordManagerController(PasswordManagerView view) {
         this.view = view;
@@ -44,7 +46,7 @@ public class PasswordManagerController {
             String username = view.getUsername();
             String password = view.getPassword();
 
-            if (SQLHelper.checkUserCredentials(username, password)) {
+            if (authenticationModel.validateCredentials(username, password)) {
                 view.showSuccessMessage("Login Successful!");
             } else {
                 view.showErrorMessage("Invalid credentials.");
@@ -59,7 +61,7 @@ public class PasswordManagerController {
             String username = view.getUsername();
             String password = view.getPassword();
 
-            if (SQLHelper.addUser(username, password)) {
+            if (authenticationModel.createUser(username, password)) {
                 view.showSuccessMessage("User Registered!");
             } else {
                 view.showErrorMessage("Registration Failed!");
