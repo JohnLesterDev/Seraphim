@@ -17,7 +17,7 @@
  * Copyright (C) 2025 JohnLesterDev
  */
 
-package dev.johnlester.seraphim.utils.ui;
+package dev.johnlester.seraphim.utils.ui.builder;
 
 import java.awt.Color;
 import java.awt.Cursor;
@@ -34,8 +34,10 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelListener;
 
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.border.Border;
 import javax.swing.AbstractButton;
+import javax.swing.Icon;
 
 
 public class ComponentBuilder<T extends JComponent> {
@@ -47,6 +49,18 @@ public class ComponentBuilder<T extends JComponent> {
 
     public T get() {
         return component;
+    }
+
+    public ComponentBuilder<T> setText(String text) {
+        if (component instanceof AbstractButton) ((AbstractButton)component).setText(text);
+        if (component instanceof JLabel) ((JLabel)component).setText(text);
+        return this;
+    }
+
+    public ComponentBuilder<T> setIcon(Icon icon) {
+        if (component instanceof AbstractButton) ((AbstractButton)component).setIcon(icon);
+        if (component instanceof JLabel) ((JLabel)component).setIcon(icon);
+        return this;
     }
 
     public ComponentBuilder<T> setForeground(Color color) {

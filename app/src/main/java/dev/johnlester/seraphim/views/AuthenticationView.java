@@ -20,18 +20,22 @@
 
 package dev.johnlester.seraphim.views;
 
-import java.awt.Color;
+import java.awt.Image;
 import java.awt.LayoutManager2;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
-import dev.johnlester.seraphim.utils.ui.ComponentBuilder;
-import dev.johnlester.seraphim.utils.ui.components.FadePanel;
+import dev.johnlester.seraphim.utils.ResourceUtils;
+import dev.johnlester.seraphim.utils.effect.EffectManager;
+import dev.johnlester.seraphim.utils.ui.builder.ComponentBuilder;
+import dev.johnlester.seraphim.utils.ui.components.SLabel;
 
 
 public class AuthenticationView extends BaseView {
+    private SLabel closeButton;
 
     public AuthenticationView(JFrame frame) {
         super(frame); 
@@ -54,39 +58,44 @@ public class AuthenticationView extends BaseView {
 
     @Override
     protected void initView() {
-        int parentWidth = getDimension().width;
-    int parentHeight = getDimension().height;
+        // Load your icons (replace with actual paths)
+        Image outlineIcon = new ImageIcon(ResourceUtils.getResourceFile("icons/ui/buttons/X/outline.png")).getImage();
+        Image solidIcon = new ImageIcon(ResourceUtils.getResourceFile("icons/ui/buttons/X/solid.png")).getImage();
 
-    
 
-    // Calculate the relative position and size
-    int x = (int) (parentWidth * 0.866); // X = 86.6% of parent width
-    int y = (int) (parentHeight * 0.02); // Y = 2% of parent height
-    int width = (int) (parentWidth * 0.093); // Width = 9.3% of parent width
-    int height = (int) (parentHeight * 0.083); // Height = 8.3% of parent height
-
-    // Create and configure the panel using ComponentBuilder
-    final FadePanel panel = new ComponentBuilder<>(new FadePanel())
+        int x = (int) (getDimension().width * 0.866);
+        int y = (int) (getDimension().height * 0.02);
+        int width = (int) (getDimension().width * 0.093);
+        int height = (int) (getDimension().height * 0.083);
+        
+        closeButton = new ComponentBuilder<SLabel>(new SLabel(outlineIcon, solidIcon))
             .setBounds(x, y, width, height)
-            .setOpaque(false)
-            .setBackground(Color.RED)
-            .addTo(this)
+            .setIcon(new ImageIcon(outlineIcon))
             .get();
-            
-            panel.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseEntered(MouseEvent e) {
-                    // On hover in, fade from red to blue
-                    panel.changeColor(Color.RED, 0.0f, 1.0f, 500);
-                }
-            
-                @Override
-                public void mouseExited(MouseEvent e) {
-                    // On hover out, fade from blue back to red
-                    panel.changeColor(Color.RED, 1.0f, 0.0f, 500);
-                }
+
+        closeButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                closeButton.transitionIcons(
+                    850, 
+                    EffectManager.cubicBezier(0.21f,0.29f,0.0f,1.0f)
+                );
+
+                closeButton.transitionRotations(90f, 850, EffectManager.cubicBezier(0.21f,0.29f,0.0f,1.0f));
             }
-        );
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                closeButton.transitionIcons(
+                    850, 
+                    EffectManager.cubicBezier(0.21f,0.29f,0.0f,1.0f)
+                );
+
+                closeButton.transitionRotations(-90f, 850, EffectManager.cubicBezier(0.21f,0.29f,0.0f,1.0f));
+            }
+        });
+
+        add(closeButton);
     }
     
 
@@ -104,4 +113,3 @@ public class AuthenticationView extends BaseView {
         return null;
     }
 }
-
