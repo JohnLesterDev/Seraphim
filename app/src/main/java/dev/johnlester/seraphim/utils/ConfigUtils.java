@@ -32,13 +32,18 @@ public final class ConfigUtils {
         if (configFile.exists()) {
             loadProperties();
         } else {
+            File parentDir = configFile.getParentFile();
+            if (!parentDir.exists()) {
+                parentDir.mkdirs(); 
+            }
+
             setDefaultProperties();
             saveProperties();
         }
     }
 
     private static void setDefaultProperties() {
-        properties.setProperty("title", "Seraphim: Universal Secure Vault Overseer");
+        properties.setProperty("title", "Seraphim: Secure Vault Overseer");
         properties.setProperty("version", "0.0.1");
         properties.setProperty("homePath", configFilePath);
         properties.setProperty("rememberedUsername", "");

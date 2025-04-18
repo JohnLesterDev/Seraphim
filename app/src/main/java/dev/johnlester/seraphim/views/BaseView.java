@@ -23,8 +23,10 @@ import javax.swing.*;
 
 import dev.johnlester.seraphim.utils.ConfigUtils;
 import dev.johnlester.seraphim.utils.MonitorUtils;
+import dev.johnlester.seraphim.utils.ResourceUtils;
 
 import java.awt.*;
+import java.net.URL;
 
 /**
  * This abstract class provides a common interface for all views in the application.
@@ -42,18 +44,21 @@ public abstract class BaseView extends JPanel {
 
         convertDimensionPercentage(defineWidthScale(), defineHeightScale());
         setPreferredSize(dimension);
-        setLayout(new BorderLayout());
+        setLayout(defineLayoutManager());
+        initWindow();
         initView();
+        refreshView();
     }
 
 
     protected abstract void initView();
+    protected abstract void initWindow();
     protected abstract float defineWidthScale();
     protected abstract float defineHeightScale();
+    protected abstract LayoutManager2 defineLayoutManager();
 
 
     public void convertDimensionPercentage(float widthPercentage, float heightPercentage) {
-        // All scaling is based on monitor height
         int monitorIndex = ConfigUtils.getInt("defaultMonitorIndex", MonitorUtils.getDefaultMonitorIndex());
         Dimension fullDimension = MonitorUtils.getMonitorDimensions().get(monitorIndex);
     
@@ -69,6 +74,10 @@ public abstract class BaseView extends JPanel {
         frame.setTitle(title);
     }
 
+    public void setWindowIcon(String path) {
+        URL resourceUrl = ResourceUtils.getResourceFile(path);
+        frame.setIconImage(new ImageIcon(resourceUrl).getImage());
+    }
 
     public void refreshView() {
         frame.revalidate();
@@ -78,5 +87,9 @@ public abstract class BaseView extends JPanel {
 
     public void resetView() {
         // For clearing or resetting fields, buttons, etc.
+    }
+
+    public Dimension getDimension() {
+        return dimension;
     }
 }

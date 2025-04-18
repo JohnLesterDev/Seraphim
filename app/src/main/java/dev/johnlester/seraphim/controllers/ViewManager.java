@@ -22,6 +22,8 @@ package dev.johnlester.seraphim.controllers;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import dev.johnlester.seraphim.utils.MonitorUtils;
+
 /**
  * Class that manages the main window of the application.
  * 
@@ -49,9 +51,32 @@ public class ViewManager {
      * @param windowTitle The new title of the window.
      */
     public static void switchTo(JPanel newView, String windowTitle) {
+        mainFrame.setTitle(windowTitle);
         mainFrame.setContentPane(newView);
+
+        
         mainFrame.revalidate();
         mainFrame.pack();
+        mainFrame.repaint();
+    }
+
+    /**
+     * Switches the content pane of the main window to a new view and centers
+     * the window on a specified monitor.
+     * 
+     * @param newView The new view to be displayed in the content pane.
+     * @param windowTitle The new title of the window.
+     * @param monitorIndex The index of the monitor to center the window on.
+     */
+    public static void switchTo(JPanel newView, String windowTitle, int monitorIndex) {
+        mainFrame.setTitle(windowTitle);
+        mainFrame.setContentPane(newView);
+        
+        mainFrame.revalidate();
+        mainFrame.pack();
+
+        MonitorUtils.centerFrameOnMonitor(mainFrame, monitorIndex);
+        
         mainFrame.repaint();
     }
 }

@@ -55,7 +55,10 @@ public class App {
             ViewManager.init(frame);
 
             AuthenticationView authenticationView = new AuthenticationView(frame);
-            ViewManager.switchTo(authenticationView, frame.getTitle() + " - Login");
+            ViewManager.switchTo(authenticationView,
+                frame.getTitle() + " - Login",
+                ConfigUtils.getInt("defaultMonitorIndex", 0)
+                );
 
             frame.setVisible(true);
         });

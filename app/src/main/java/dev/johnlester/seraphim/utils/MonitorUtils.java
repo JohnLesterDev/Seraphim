@@ -24,6 +24,8 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JFrame;
+
 
 /**
  * Utility class for retrieving information about the system's monitors.
@@ -110,4 +112,22 @@ public final class MonitorUtils {
         }
         return boundsList;
     }
+
+    public static void centerFrameOnMonitor(JFrame frame, int monitorIndex) {
+        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        GraphicsDevice[] screens = ge.getScreenDevices();
+
+        if (monitorIndex < 0 || monitorIndex >= screens.length) monitorIndex = 0;
+
+        GraphicsConfiguration gc = screens[monitorIndex].getDefaultConfiguration();
+        Rectangle bounds = gc.getBounds();
+
+        int frameW = frame.getWidth();
+        int frameH = frame.getHeight();
+
+        int x = bounds.x + (bounds.width - frameW) / 2;
+        int y = bounds.y + (bounds.height - frameH) / 2;
+
+        frame.setLocation(x, y);
+}
 }
